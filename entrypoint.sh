@@ -20,7 +20,6 @@ done
 if [ -f $OUTPUT_FILENAME ]; then
 	rm $OUTPUT_FILENAME
 fi
-touch $OUTPUT_FILENAME
 
 i=0
 len=$#
@@ -30,7 +29,11 @@ do
     	shift
     	let i=i+1
     elif [ -f $1 ]; then
-    	cat $1 >> $OUTPUT_FILENAME
+    	if [ -f $OUTPUT_FILENAME ]; then
+    		cat $1 >> $OUTPUT_FILENAME
+    	else
+    		cp -p $1 $OUTPUT_FILENAME
+    	fi
     fi
     shift
     let i=i+1
